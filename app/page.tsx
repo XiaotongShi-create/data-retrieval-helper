@@ -5,6 +5,7 @@ import { useRef, RefObject } from 'react';
 import QueryOutput from '../components/QueryOutput/QueryOutput';
 
 function App() {
+    const APIEndPoint = "https://d31d96jtmy1k9d.cloudfront.net";
     const SchemaExplorerRef: RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null); // Reference to the left area
     const DesignAreaRef: RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null); // Reference to the right area
     return (
