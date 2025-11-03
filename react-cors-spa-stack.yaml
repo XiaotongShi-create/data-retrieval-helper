@@ -1,3 +1,4 @@
+# a full-stack template to host a React Single Page Application with CORS-enabled API
 AWSTemplateFormatVersion: '2010-09-09'
 
 Description: >
@@ -41,6 +42,7 @@ Resources:
       AuthorizationType: NONE
       HttpMethod: GET
       Integration:
+        # will replace the mock integration with a real integration when have backend
         Type: MOCK
         PassthroughBehavior: WHEN_NO_MATCH
         RequestTemplates:
@@ -76,9 +78,13 @@ Resources:
     Properties:
       BucketName: !Sub 'data-retrieval-helper-${SimpleAPI}'
       PublicAccessBlockConfiguration:
+        # Blocking new public Access Control Lists (ACLs)
         BlockPublicAcls : true
+        # Cannot add bucket policies that grant public access
         BlockPublicPolicy : true
+        # Existing public ACLs are ignored
         IgnorePublicAcls : true
+        # Block any bucket policies that allow public access
         RestrictPublicBuckets : true
       LoggingConfiguration:
         DestinationBucketName: !Ref LoggingBucket
@@ -102,9 +108,13 @@ Resources:
             Effect: Allow
             Resource: !Sub ${S3Bucket.Arn}/*
             Principal:
+              # Only the CloudFront service can access this bucket
+              # Regular users, other AWS services, or direct S3 access is blocked
               Service: cloudfront.amazonaws.com
             Condition:
               StringEquals:
+                # Only requests from the CloudFront distribution defined in this template are allowed, 
+                # other CloudFront distributions are blocked
                 AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${CFDistributionSPA}
             Action: 's3:GetObject*'
       Bucket: !Ref S3Bucket
@@ -158,13 +168,20 @@ Resources:
     Properties:
       DistributionConfig:
         Origins:
+        # Tells CloudFront where to get the contents of our SPA
         - DomainName: !GetAtt S3Bucket.RegionalDomainName
           Id: myS3Origin
           S3OriginConfig:
+            # OAI is deprecated, using OAC instead
             OriginAccessIdentity: ""
+          # Get the uniqule ID of the OAC resource defined below
           OriginAccessControlId: !GetAtt CloudFrontOriginAccessControl.Id
+        # The following configures the core behavior of the CloudFront distribution
+        # Activates the CloudFront distribution so the domain becomes live
         Enabled: 'true'
+        # When someone visits the root URL, serve index.html
         DefaultRootObject: index.html
+        # Defines how CloudFront handles caching and request routing
         DefaultCacheBehavior:
           AllowedMethods:
           - GET
@@ -175,10 +192,13 @@ Resources:
           OriginRequestPolicyId: 88a5eaf4-2fd4-4709-b370-b4c650ea3fcf # CORS-S3Origin
           ResponseHeadersPolicyId: eaab4381-ed33-4a86-88ca-d9558dc6cd63 # CORS-with-preflight-and-SecurityHeadersPolicy
           ViewerProtocolPolicy: redirect-to-https
+        # Which CloudFront physocal data centers locations are used to serve content
         PriceClass: PriceClass_All
         Logging:
           Bucket: !GetAtt LoggingBucket.RegionalDomainName
           Prefix: 'cf-spa-access-logs'
+        # Configures TLS certificates and encryption protocols
+        # This ensures secure HTTPS connections
         ViewerCertificate:
           CloudFrontDefaultCertificate: true
           MinimumProtocolVersion: 'TLSv1.2_2021'
@@ -220,14 +240,20 @@ Resources:
 
   # The Amazon CloudFront origin access control
   CloudFrontOriginAccessControl:
+    # Creates an OAC resource
+    # It is modern way to secure CloudFront-S3 connections (replaces older OAI)
     Type: AWS::CloudFront::OriginAccessControl
+    # Ensures S3 bucket is created before OAC
     DependsOn:
       - S3Bucket
     Properties: 
       OriginAccessControlConfig:
         Description: Default Origin Access Control
+        # Names the OAC after your CloudFormation stack
         Name: !Ref AWS::StackName
         OriginAccessControlOriginType: s3
+        # CloudFront always signs requests
+        # S3 always checks the signature for if it comes from authorized CloudFront
         SigningBehavior: always
         SigningProtocol: sigv4
 
