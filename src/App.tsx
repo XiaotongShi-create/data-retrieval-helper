@@ -4,6 +4,7 @@ import { QueryOutputProvider } from './components/Contexts/QueryOutputContext';
 import './globals.css';
 
 function App() {
+    // there are three areas in the app: schema explorer, design area, and query output
     const SchemaExplorerRef = useRef<HTMLDivElement>(null);
     const DesignAreaRef = useRef<HTMLDivElement>(null);
     
