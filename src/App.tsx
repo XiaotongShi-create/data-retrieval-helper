@@ -18,9 +18,7 @@ function App() {
                     <div className="design-area" ref={DesignAreaRef}>
                         <p>Please drag a table from the left over here</p>
                     </div>
-                    <QueryOutput>
-                        {/* additional coding in progress */}
-                    </QueryOutput>
+                    <QueryOutput />
                 </div>
             </div>
         </QueryOutputProvider> 
