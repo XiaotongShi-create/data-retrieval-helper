@@ -32,13 +32,13 @@ export const QueryOutputProvider: React.FC<QueryOutputProviderProps> = ({
   // centralize the management of the query state in the Provider
   const [query, setQueryState] = useState<string>(initialQuery);
   // provide access to the positional information of the QueryOutput component
-  const divRef = useRef<HTMLDivElement>(null);
+  const QueryOutputRef = useRef<HTMLDivElement>(null);
 
   // a getter method to access the current query
   const getQuery = (): string => query;
   // a getter method to access the positional information of the QueryOutput component
   const getBoundingClientRect = (): DOMRect => {
-    return divRef.current ? divRef.current.getBoundingClientRect() : new DOMRect();
+    return QueryOutputRef.current ? QueryOutputRef.current.getBoundingClientRect() : new DOMRect();
   };
   // a setter method to overwrite the current query
   const setQuery = (newQuery: string): void => {
@@ -77,7 +77,7 @@ export const QueryOutputProvider: React.FC<QueryOutputProviderProps> = ({
 
   return (
     <QueryOutputContext.Provider value={contextValue}>
-      <div ref={divRef}>
+      <div ref={QueryOutputRef}>
         {children}
       </div>
     </QueryOutputContext.Provider>
