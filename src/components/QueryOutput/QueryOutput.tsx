@@ -1,17 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
-import { generateQuery } from './QueryContent'; // Import generateQuery
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { useQueryOutput } from '../Contexts/QueryOutputContext';
 import '../QueryOutputStyles/QueryOutput.css';
 
-interface QueryOutputProps {
-    // the optional children prop allows other components to be nested inside QueryOutput
-    children?: React.ReactNode;
-}
-
-const QueryOutput = ({ children }: QueryOutputProps) => {
+const QueryOutput = () => {
     // access query context methods
     const { getQuery } = useQueryOutput();
 
@@ -38,7 +31,6 @@ const QueryOutput = ({ children }: QueryOutputProps) => {
                     </SyntaxHighlighter>
                 </div>
             </div>
-            {children}
         </div>
     );
 };
