@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useRef, ReactNode } from 'react';
-import { QueryUpdate } from '../DataDefinitions/Table1Def';
+import { QueryUpdate } from '../DataDefinitions/TableADef';
 import { generateQuery, queryParts } from '../QueryOutput/QueryContent'; // Import both
 
 // define the context interface using setter/getter pattern
