@@ -1,28 +1,28 @@
 export interface QueryUpdate {
-  // if the field gets selected
+  // if the DataField gets selected
   // the string will be added to the end of the select clause in the query
   select: string;
-  // if the field gets selected
+  // if the DataField gets selected
   // the string will be added to the end of the join clause in the query
   join: string;
-  // if the field gets selected
+  // if the DataField gets selected
   // the string will be added to the end of the where clause in the query
   where: string;
 }
 
-export interface Field {
-  // the name of the field
+export interface DataField {
+  // the name of the DataField
   name: string;
-  // all possible values of the field
+  // all possible values of the DataField
   values: string[];
-  // the description of the field
+  // the description of the DataField
   description: string;
-  // how to update the query when the field gets selected
+  // how to update the query when the DataField gets selected
   queryUpdate: QueryUpdate;
 }
 
-// the fields that are available to be selected
-export const fields: Field[] = [
+// the dataField that are available to be selected
+export const dataField: DataField[] = [
     {
         name: "group_id",
         values: ["GRP001", "GRP002", "GRP003", "GRP004"], // Sample member IDs
