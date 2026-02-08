@@ -1,5 +1,5 @@
 import React from 'react';
-import '../searchFieldsStyles/searchFields.css';
+import '../SearchDataStyles/SearchData.css';
 import { dataField } from '../DataDefinitions/SchemaADef';
 import { getFilteredFields, SearchResult } from './SearchData';
 
