@@ -7,10 +7,8 @@ import SchemaAModule from './components/Module/SchemaA';
 import './globals.css';
 
 function App() {
-    // there are three areas in the app: schema explorer, design area, and query output
-    // SchemaExplorerRef is removed because it is now managed inside SchemaExplorerProvider
-    const DesignAreaRef = useRef<HTMLDivElement>(null);
-    const SchemaExplorerRef = useRef<HTMLDivElement>(null);
+
+
     
     return (
         // All three providers are placed at the outermost level because
@@ -20,10 +18,10 @@ function App() {
                 <DesignAreaProvider>
                     <div className="App">
                         <div className="container">
-                            <div className="schema-explorer" ref={SchemaExplorerRef}>
+                            <div className="schema-explorer">
                                 <h3>Which table do you want to query?</h3>
                             </div>
-                            <div className="design-area" ref={DesignAreaRef}>
+                            <div className="design-area">
                                 <p>Please drag a table from the left over here</p>
                             </div>
                             <QueryOutput />
