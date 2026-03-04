@@ -1,0 +1,55 @@
+.calendar-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+}
+
+.search-bar {
+    padding: '10px';
+    border-bottom: '1px solid #ccc';
+    background-color: 'rgb(245, 245, 245)';
+}
+
+.scrollable-content {
+    flex: 1;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px;
+}
+
+.field-item {
+    margin: 5px 0;
+    padding: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.schemaA-design-area {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background-color: rgb(255, 255, 255); /* White background for the window */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Ensure content stays within the box */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: rgb(240, 240, 240); /* Light gray header */
+    border-bottom: 1px solid #ccc;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
