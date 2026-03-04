@@ -1,0 +1,37 @@
+.clickable-field {
+    cursor: 'pointer';
+    color: 'blue';
+    text-decoration: 'underline';
+}
+
+.render-list-item {
+    padding: '10px';
+    border-bottom: '1px solid #eee';
+    cursor: 'pointer';
+}
+
+.search-bar {
+    position: 'relative';
+}
+
+.search-bar-text {
+    margin-bottom: '10px';
+    padding: '5px';
+    width: '100%';
+}
+
+.filteredFields {
+    position: 'absolute';
+    top: '40px';
+    left: '0';
+    width: '100%';
+    background-color: 'white';
+    border: '1px solid #ccc';
+    border-radius: '4px';
+    max-height: '200px';
+    overflow-y: 'auto';
+    z-index: 1000;
+    padding: '0';
+    margin: '0';
+    list-style: none;
+}
