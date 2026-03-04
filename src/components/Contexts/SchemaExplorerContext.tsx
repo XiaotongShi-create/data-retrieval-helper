@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useRef, ReactNode } from 'react';
 
 export interface SchemaExplorerContextType {
-  // get the position and dimensions of the SchemaExplorer component
+  // getter: returns the position and dimensions of the SchemaExplorer panel
   getBoundingClientRect: () => DOMRect;
+  // setter: registers the SchemaExplorer DOM element — use as ref={setElement}
+  setElement: (el: HTMLDivElement | null) => void;
 }
 
 // create the empty context
@@ -15,23 +17,27 @@ interface SchemaExplorerProviderProps {
 
 // define the Provider component
 export const SchemaExplorerProvider: React.FC<SchemaExplorerProviderProps> = ({ children }) => {
-  // create refs for the schema explorer
-  const schemaExplorerRef = useRef<HTMLDivElement>(null);
+  // private ref — never exposed outside this provider
+  const schemaExplorerRef = useRef<HTMLDivElement | null>(null);
 
-  // getter for SchemaExplorer rect
+  // setter: called by the .schema-explorer div via ref={setElement}
+  const setElement = (el: HTMLDivElement | null): void => {
+    schemaExplorerRef.current = el;
+  };
+
+  // getter: returns the bounding rect of the registered element
   const getBoundingClientRect = (): DOMRect => {
     return schemaExplorerRef.current ? schemaExplorerRef.current.getBoundingClientRect() : new DOMRect();
   };
 
   const contextValue: SchemaExplorerContextType = {
-    getBoundingClientRect
+    getBoundingClientRect,
+    setElement
   };
 
   return (
     <SchemaExplorerContext.Provider value={contextValue}>
-      <div ref={schemaExplorerRef}>
-        {children}
-      </div>
+      {children}
     </SchemaExplorerContext.Provider>
   );
 };

@@ -33,7 +33,7 @@ const DateRangePopUp: React.FC<DateRangePopUpProps> = ({ show, onClose, startDat
 
     const handleSubmit = () => {
         // Add the date condition to the first place in the array
-        queryParts.where.unshift(`eff_dt between '${startDate}' and '${endDate}'`);
+        queryParts.where.unshift(`date_range between '${startDate}' and '${endDate}'`);
         handleAddToQuery();
         // close the popup
         onClose();

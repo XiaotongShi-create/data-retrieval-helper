@@ -46,6 +46,7 @@ export const QueryOutputProvider: React.FC<QueryOutputProviderProps> = ({
   };
   // a method to add parts to the current query
   const handleAddToQuery = (newPart?: QueryUpdate): void => {
+    // if a new part is provided, add it to the appropriate queryParts array
     if (newPart) {
       if (newPart.select) {
         // add new fields to the select array
@@ -59,11 +60,11 @@ export const QueryOutputProvider: React.FC<QueryOutputProviderProps> = ({
         // add new conditions to the where array
         queryParts.where.push(newPart.where);
       }
-      
-      // generate the complete query string and update the query state
-      const newQuery = generateQuery();
-      setQueryState(newQuery);
     }
+    // always regenerate and publish the query so the output area re-renders,
+    // even when called with no argument (e.g. after directly mutating queryParts.from)
+    const newQuery = generateQuery();
+    setQueryState(newQuery);
   };
 
   // package all the getter/setter methods into the context value

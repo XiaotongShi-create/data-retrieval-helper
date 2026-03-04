@@ -2,8 +2,10 @@ import React, { createContext, useContext, useRef, ReactNode } from 'react';
 
 // defines what the Context provides to its children
 export interface DesignAreaContextType {
-    // get the position and dimensions of the DesignArea component
+    // getter: returns the position and dimensions of the DesignArea panel
     getBoundingClientRect: () => DOMRect;
+    // setter: registers the DesignArea DOM element — use as ref={setElement}
+    setElement: (el: HTMLDivElement | null) => void;
   }
 
 // create the empty context
@@ -16,23 +18,27 @@ interface DesignAreaProviderProps {
 
 // define the Provider component
 export const DesignAreaProvider: React.FC<DesignAreaProviderProps> = ({ children }) => {
-    // create refs for the desgin area
-    const designAreaRef = useRef<HTMLDivElement>(null);
-  
-    // getter for DesignArea postional information
+    // private ref — never exposed outside this provider
+    const designAreaRef = useRef<HTMLDivElement | null>(null);
+
+    // setter: called by the .design-area div via ref={setElement}
+    const setElement = (el: HTMLDivElement | null): void => {
+      designAreaRef.current = el;
+    };
+
+    // getter: returns the bounding rect of the registered element
     const getBoundingClientRect = (): DOMRect => {
       return designAreaRef.current ? designAreaRef.current.getBoundingClientRect() : new DOMRect();
     };
   
     const contextValue: DesignAreaContextType = {
-      getBoundingClientRect
+      getBoundingClientRect,
+      setElement
     };
   
     return (
       <DesignAreaContext.Provider value={contextValue}>
-        <div ref={designAreaRef}>
-          {children}
-        </div>
+        {children}
       </DesignAreaContext.Provider>
     );
   };

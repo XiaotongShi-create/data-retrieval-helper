@@ -12,12 +12,15 @@ interface SchemaAProps {
   setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
   isInDesignArea: boolean;
   setIsInDesignArea: React.Dispatch<React.SetStateAction<boolean>>;
+  // reports the final drop position to the parent so SchemaADesignArea can use it
+  setDropPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>;
 }
 
 const SchemaA: React.FC<SchemaAProps> = ({
   setShowPopup,
   isInDesignArea,
-  setIsInDesignArea
+  setIsInDesignArea,
+  setDropPosition
 }) => {
     // the screen has 3 main areas: DesignArea, SchemaExplorer, and QueryOutput
     // access methods to get positional information of these areas
@@ -35,9 +38,10 @@ const SchemaA: React.FC<SchemaAProps> = ({
         const schemaExplorer = getSchemaExplorerRect();
 
         // define the initial position of the box
+        // use left/top offsets so position is correct relative to the viewport
         const initialPosition = {
-            x: schemaExplorer.width / 2 - 50,
-            y: schemaExplorer.height / 2 - 50,
+            x: schemaExplorer.left + schemaExplorer.width / 2 - 50,
+            y: schemaExplorer.top + schemaExplorer.height / 2 - 50,
         };
 
       setPosition(initialPosition);
@@ -90,6 +94,8 @@ const SchemaA: React.FC<SchemaAProps> = ({
         };
         // the box will stay at the drag end position
         setPosition(newPosition);
+        // report the drop position to the parent Module
+        setDropPosition(newPosition);
         // mark the box as being in the DesignArea
         // to inform other components like the popup window
         setIsInDesignArea(true);
@@ -104,8 +110,8 @@ const SchemaA: React.FC<SchemaAProps> = ({
             setPosition({
             // move back to the initial position
             // which is centered in the SchemaExplorer
-            x: schemaExplorer.width / 2 - 50,
-            y: schemaExplorer.height / 2 - 50,
+            x: schemaExplorer.left + schemaExplorer.width / 2 - 50,
+            y: schemaExplorer.top + schemaExplorer.height / 2 - 50,
             });
         } else {
             console.error("SchemaExplorer is null");

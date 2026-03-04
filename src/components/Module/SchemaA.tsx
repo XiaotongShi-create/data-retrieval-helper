@@ -27,27 +27,29 @@ const SchemaAModule: React.FC<SchemaAModuleProps> = ({
   // there is a button on the SchemaA component that can show the popup
   // State to control popup visibility
   const [showPopup, setShowPopup] = useState(false);
+  // track where the box was dropped so SchemaADesignArea can start at that position
+  const [dropPosition, setDropPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   // the SchemaA is rendered only when they are not yet in the right area.
   // a failed drag that didn't drop the box in the right area will not render those components
   const [isInRightArea, setIsInRightArea] = useState(false);
 
   return (
     <>
-      {/* SchemaA - the one only has Eligibility on it */}
+      {/* Small box in the SchemaExplorer — shown only while not yet dropped into the DesignArea */}
       {!isInRightArea && (
         <SchemaA
           setShowPopup={setShowPopup}
           isInDesignArea={isInRightArea}
           setIsInDesignArea={setIsInRightArea}
+          setDropPosition={setDropPosition}
         />
       )}
 
-      {/* Large Box - the one has all the fields on it */}
+      {/* Large box with all fields — shown after a successful drop into the DesignArea */}
       {isInRightArea && (
-        <SchemaA
-          setShowPopup={setShowPopup}
-          isInDesignArea={isInRightArea}
-          setIsInDesignArea={setIsInRightArea}
+        <SchemaADesignArea
+          onShowPopup={() => setShowPopup(true)}
+          initialPosition={dropPosition}
         />
       )}
 

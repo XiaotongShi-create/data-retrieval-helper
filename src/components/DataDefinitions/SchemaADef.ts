@@ -24,12 +24,22 @@ export interface DataField {
 // the dataField that are available to be selected
 export const dataField: DataField[] = [
     {
-        name: "group_id",
-        values: ["GRP001", "GRP002", "GRP003", "GRP004"], // Sample member IDs
-        description: "Unique identifier for a health plan member",
+        name: "member_id",
+        values: [], // General plan types
+        description: "Member's unique identifier",
         queryUpdate: {
           select: "member_id",
-          join: "foreign_table_where_member_id_comes_from mem on main.member_id = mem.member_id",
+          join: "",
+          where: ""
+        }
+      },
+      {
+        name: "group_id",
+        values: ["GRP001", "GRP002", "GRP003", "GRP004"], // Sample member IDs
+        description: "Identifier for the member's group or employer",
+        queryUpdate: {
+          select: "group_id",
+          join: "join project_id.dataset_id.group_table grp on a.member_id = grp.member_id",
           where: ""
         }
       },
@@ -39,7 +49,7 @@ export const dataField: DataField[] = [
         description: "Type of health insurance plan",
         queryUpdate: {
           select: "plan_type",
-          join: "foreign_table_where_plan_type_comes_from plan on main.member_id = plan.member_id",
+          join: "join project_id.dataset_id.plan_table plan on a.member_id = plan.member_id",
           where: ""
         }
       }
