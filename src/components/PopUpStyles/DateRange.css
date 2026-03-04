@@ -1,0 +1,36 @@
+.date-range {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 20px;
+}
+
+.date-range-content {
+    text-align: center;
+}
+
+.startdate{
+    margin-left: '10px'
+}
+
+.space-before-enddate{
+    margin-top: '10px'
+}
+
+.enddate{
+    margin-left: '10px'
+}
+
+.submit{
+    margin-top: '20px'
+}
+
+.submit button{
+    margin-right: 10px;
+}
