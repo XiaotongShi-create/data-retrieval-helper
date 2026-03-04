@@ -16,7 +16,7 @@ interface SchemaADesignAreaProps {
     initialPosition: { x: number; y: number };
 };
 
-const LargeBox: React.FC<SchemaADesignAreaProps> = ({
+const SchemaADesignArea: React.FC<SchemaADesignAreaProps> = ({
     onShowPopup,
     initialPosition
 }) => {
@@ -116,4 +116,4 @@ const LargeBox: React.FC<SchemaADesignAreaProps> = ({
     );
 };
 
-export default LargeBox;
+export default SchemaADesignArea;
